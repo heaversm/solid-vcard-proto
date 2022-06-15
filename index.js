@@ -57,6 +57,7 @@ handleRedirectAfterLogin();
 // 2. Write to profile
 async function writeProfile() {
   const name = document.getElementById("input_name").value;
+  const nickname = document.getElementById("input_nickname").value;
 
   if (!session.info.isLoggedIn) {
     // You must be authenticated to write.
@@ -85,10 +86,15 @@ async function writeProfile() {
   // Using the name provided in text field, update the name in your profile.
   // VCARD.fn object is a convenience object that includes the identifier string "http://www.w3.org/2006/vcard/ns#fn".
   // As an alternative, you can pass in the "http://www.w3.org/2006/vcard/ns#fn" string instead of VCARD.fn.
-  profile = setStringNoLocale(profile, VCARD.fn, name);
+  profile = setStringNoLocale(profile, VCARD.fn, name); //thing, property, val
+  if (nickname) {
+    profile = setStringNoLocale(profile, VCARD.nickname, nickname); //thing, property, val
+  }
 
   // Write back the profile to the dataset.
   myProfileDataset = setThing(myProfileDataset, profile);
+  //console.log(profile, myProfileDataset, webID, name);
+  //console.log(VCARD);
 
   // Write back the dataset to your Pod.
   await saveSolidDatasetAt(profileDocumentUrl.href, myProfileDataset, {
@@ -96,9 +102,9 @@ async function writeProfile() {
   });
 
   // Update the page with the retrieved values.
-  document.getElementById(
-    "labelWriteStatus"
-  ).textContent = `Wrote [${name}] as name successfully!`;
+  document.getElementById("labelWriteStatus").textContent = `Wrote [${name}] ${
+    nickname && `and [${nickname}]`
+  } successfully!`;
   document.getElementById("labelWriteStatus").setAttribute("role", "alert");
   document.getElementById(
     "labelFN"
@@ -154,9 +160,11 @@ async function readProfile() {
   // As an alternative, you can pass in the "http://www.w3.org/2006/vcard/ns#fn" string instead of VCARD.fn.
 
   const formattedName = getStringNoLocale(profile, VCARD.fn);
+  const nickname = getStringNoLocale(profile, VCARD.nickname || "none");
 
   // Update the page with the retrieved values.
   document.getElementById("labelFN").textContent = `[${formattedName}]`;
+  document.getElementById("labelNickname").textContent = `[${nickname}]`;
 }
 
 buttonLogin.onclick = function () {
