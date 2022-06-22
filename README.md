@@ -1,10 +1,8 @@
-# Solid Tutorial
+# Solid V-Card Read / Write
 
-[Tutorial Link](https://solidproject.org/developers/tutorials/first-app)
+This app logs in and writes to your solid pod in the vcard standard and reads the data back
 
 ## Up and Running
 
 - `npm i`
 - `npx parcel index.html`
-
-Make sure to change the `SOLID_IDENTITY_PROVIDER` to the URL of your provider in `index.js`

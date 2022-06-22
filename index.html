@@ -12,9 +12,18 @@
        <h2>Solid VCARD Read / Write Example</h2>
      </header>
      <section id="login" class="panel">
+      <div class="row">
+        <label for="inputProvider">1. Specify URL for your identity (POD) provider</label>
+        <input type="text" id="input_provider" name="input_provider" placeholder="https://inrupt.net/">
+        <button name="btnProvider" id="btnProvider">Submit</button>
+      </div>
+      
+     </section>
+     <section id="login" class="panel">
+      
        <div class="row">
          <label id="labelLogin" for="btnLogin"
-           >1. Click the button to log into
+           >2. Click the button to log into
            <span id="solid_identity_provider"
              >...provided by the JavaScript code...</span
            >:
@@ -27,7 +36,7 @@
      <div id="read" class="panel">
        <div class="row">
          <form id="writeForm">
-           <label id="writelabel" for="input_name">2. Write your name: </label>
+           <label id="writelabel" for="input_name">3. Write your name: </label>
            <input
              type="text"
              id="input_name"
@@ -58,7 +67,7 @@
        <div class="row">
          <form id="readForm">
            <label id="readlabel" for="webID"
-             >3. Read back name (anyone's!) from their WebID:
+             >4. Read back name (anyone's!) from their WebID:
            </label>
            <input
              type="url"

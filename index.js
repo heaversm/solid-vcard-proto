@@ -9,8 +9,8 @@ import {
 import { Session } from "@inrupt/solid-client-authn-browser";
 import { VCARD } from "@inrupt/vocab-common-rdf";
 
-// If your Pod is *not* on `solidcommunity.net`, change this to your identity provider.
-const SOLID_IDENTITY_PROVIDER = "https://inrupt.net/";
+const DEFAULT_PROVIDER = "https://inrupt.net/";
+let SOLID_IDENTITY_PROVIDER = DEFAULT_PROVIDER;
 document.getElementById(
   "solid_identity_provider"
 ).innerHTML = `[<a target="_blank" href="${SOLID_IDENTITY_PROVIDER}">${SOLID_IDENTITY_PROVIDER}</a>]`;
@@ -21,6 +21,7 @@ const NOT_ENTERED_WEBID =
 const session = new Session();
 
 const buttonLogin = document.getElementById("btnLogin");
+const buttonProvider = document.getElementById("btnProvider");
 const writeForm = document.getElementById("writeForm");
 const readForm = document.getElementById("readForm");
 
@@ -33,6 +34,13 @@ async function login() {
       redirectUrl: window.location.href,
     });
   }
+}
+
+function specifyProvider() {
+  const providerInput = document.getElementById("input_provider");
+  const providerURL = providerInput.value;
+  SOLID_IDENTITY_PROVIDER = providerURL || DEFAULT_PROVIDER;
+  console.log(providerURL, SOLID_IDENTITY_PROVIDER);
 }
 
 // 1b. Login Redirect. Call session.handleIncomingRedirect() function.
@@ -169,6 +177,10 @@ async function readProfile() {
 
 buttonLogin.onclick = function () {
   login();
+};
+
+buttonProvider.onclick = function () {
+  specifyProvider();
 };
 
 writeForm.addEventListener("submit", (event) => {
